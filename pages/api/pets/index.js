@@ -7,8 +7,9 @@ export default async function handler(req, res) {
   await dbConnect()
 
   switch (method) {
-    case 'GET':
+    case 'GET':      
       try {
+        res.setHeader('Cache-Control', 's-maxage=2, stale-while-revalidate')
         const pets = await Pet.find({}) /* find all the data in our database */
         res.status(200).json({ success: true, data: pets })
       } catch (error) {
